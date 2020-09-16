@@ -274,7 +274,8 @@ function checkSubscriberQuality(
 
             const processResults = () => {
               const audioVideoResults: QualityTestResults = buildResults(builder);
-              if (!audioOnly && !isAudioQualityAcceptable(audioVideoResults)) {
+              const allowAudioFallback: boolean = options != null && (options.allowAudioFallback == null || options.allowAudioFallback);
+              if (!audioOnly && !isAudioQualityAcceptable(audioVideoResults) && allowAudioFallback) {
                 audioOnly = true;
                 checkSubscriberQuality(OT, session, credentials, options, onUpdate, true)
                   .then((results: QualityTestResults) => {
